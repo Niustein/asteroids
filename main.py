@@ -12,6 +12,12 @@ def main():
     pygame.init()
     py_clock = pygame.time.Clock()
     dt = 0
+
+    # Creating groups
+    updatable = pygame.sprite.Group()
+    drawable = pygame.sprite.Group()
+    Player.containers = (updatable, drawable)  
+
     screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
 #    player_init_x = SCREEN_WIDTH / 2
 #    player_init_y = SCREEN_HEIGHT / 2
@@ -19,17 +25,27 @@ def main():
 
 #further testing with boots
 #    player2 = Player(SCREEN_WIDTH/2, SCREEN_HEIGHT/2)
-#    player2.get_position_info()  
-
+#    player2.get_position_info()
+ 
     while True:
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 return
 #        pygame.Surface.fill(screen, (0,0,0)) - works, was my solution, swapping
-        player.update(dt) 
+        
+        for p in updatable:
+            p.update(dt) 
+
+#       after competing step and looking at solution: realized I drew this before screen filled        
+#        for p in drawable:
+#            p.draw(screen)
 
         screen.fill("black")
-        player.draw(screen)
+
+#        player.draw(screen)
+        for p in drawable:
+            p.draw(screen)
+
         pygame.display.flip()
 
 
