@@ -3,6 +3,7 @@ import pygame
 
 # pyright: reportUndefinedVariable=false
 from constants import *
+from player import Player
 
 def main():
     print("Starting asteroids!")
@@ -12,6 +13,13 @@ def main():
     py_clock = pygame.time.Clock()
     dt = 0
     screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
+#    player_init_x = SCREEN_WIDTH / 2
+#    player_init_y = SCREEN_HEIGHT / 2
+    player = Player(SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2)
+
+#further testing with boots
+#    player2 = Player(SCREEN_WIDTH/2, SCREEN_HEIGHT/2)
+#    player2.get_position_info()  
 
     while True:
         for event in pygame.event.get():
@@ -19,7 +27,9 @@ def main():
                 return
 #        pygame.Surface.fill(screen, (0,0,0)) - works, was my solution, swapping 
         screen.fill("black")
+        player.draw(screen)
         pygame.display.flip()
+
 
         # limit framerate to 60 FPS
         dt = py_clock.tick(60) / 1000
