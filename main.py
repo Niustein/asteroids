@@ -44,17 +44,24 @@ def main():
 #        pygame.Surface.fill(screen, (0,0,0)) - works, was my solution, swapping
         
         for p in updatable:
-            p.update(dt) 
+            p.update(dt)
 
 #       after competing step and looking at solution: realized I drew this before screen filled        
 #        for p in drawable:
 #            p.draw(screen)
 
-        for val in asteroids:
-            if val.collision_check(player):
-                print(f"{val.position} vs {player.position} and the radius are: {val.radius} vs {player.radius}")
+        for asteroid in asteroids:
+            if asteroid.collision_check(player):
+#                print(f"{asteroid.position} vs {player.position} and the radius are: {asteroid.radius} vs {player.radius}")
                 print("Game over!")
                 sys.exit(0)
+
+            for bullet in shots:
+                if asteroid.collision_check(bullet):
+                    bullet.kill()
+                    asteroid.split()
+
+
     
 
         screen.fill("black")

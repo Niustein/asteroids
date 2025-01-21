@@ -24,7 +24,7 @@ class CircleShape(pygame.sprite.Sprite):
     def collision_check(self, asteroid):
         dist_between = pygame.math.Vector2.distance_to(asteroid.position, self.position)
         if dist_between <= self.radius + asteroid.radius:
-            print(dist_between)
+#            print(dist_between)
             return True
         return False
     

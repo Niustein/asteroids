@@ -1,12 +1,13 @@
 import pygame
 from circleshape import CircleShape
 from shot import Shot
-from constants import PLAYER_RADIUS, PLAYER_TURN_SPEED, PLAYER_SPEED, PLAYER_SHOOT_SPEED
+from constants import PLAYER_RADIUS, PLAYER_TURN_SPEED, PLAYER_SPEED, PLAYER_SHOOT_SPEED, PLAYER_SHOOT_COOLDOWN
 
 class Player(CircleShape):
     def __init__(self,x,y):
         super().__init__(x,y,PLAYER_RADIUS)
         self.rotation = 0
+        self.timer = 0
 
     # in the player class
     def triangle(self):
@@ -28,13 +29,18 @@ class Player(CircleShape):
         self.position += forward * PLAYER_SPEED * dt        
        
     def shoot(self):
-        new_shot = Shot(self.position.x, self.position.y)
-        shot_velocity = pygame.Vector2(0,1)
-        shot_velocity = shot_velocity.rotate(self.rotation)
-        shot_velocity *= PLAYER_SHOOT_SPEED
-        new_shot.velocity = shot_velocity
+        if self.timer <= 0:
+            new_shot = Shot(self.position.x, self.position.y)
+            shot_velocity = pygame.Vector2(0,1)
+            shot_velocity = shot_velocity.rotate(self.rotation)
+            shot_velocity *= PLAYER_SHOOT_SPEED
+            new_shot.velocity = shot_velocity
+            self.timer = PLAYER_SHOOT_COOLDOWN
+
+            
 
     def update(self, dt):
+        self.timer -= dt       
         keys = pygame.key.get_pressed()
 
         if keys[pygame.K_a]:
@@ -46,7 +52,7 @@ class Player(CircleShape):
         if keys[pygame.K_s]:
             self.move(-dt)
         if keys[pygame.K_SPACE]:
-            self.shoot()        
+            self.shoot()
 
 # Further learning with boots
 #    def get_position_info(self):
