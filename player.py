@@ -8,6 +8,8 @@ class Player(CircleShape):
         super().__init__(x,y,PLAYER_RADIUS)
         self.rotation = 0
         self.timer = 0
+        self.lives = 3
+        self.is_invulnerable = False
 
     # in the player class
     def triangle(self):
@@ -53,10 +55,4 @@ class Player(CircleShape):
             self.move(-dt)
         if keys[pygame.K_SPACE]:
             self.shoot()
-
-# Further learning with boots
-#    def get_position_info(self):
-#        print(f"Position vector: {self.position}")
-#        print(f"X coordinate: {self.position.x}")
-#        print(f"Y coordinate: {self.position.y}")    
 
